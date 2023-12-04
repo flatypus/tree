@@ -89,10 +89,15 @@ export default function Tree() {
       onmousedown={(e) => {
         const [x, y] = [e.clientX, e.clientY];
         const [panX, panY] = [pan().x, pan().y];
+
         const mouseMove = (e: MouseEvent) => {
           const [newX, newY] = [e.clientX, e.clientY];
-          setPan({ x: panX - newX + x, y: panY - newY + y });
+          setPan({
+            x: panX - (newX - x) * QUALITY,
+            y: panY - (newY - y) * QUALITY,
+          });
         };
+
         const mouseUp = () => {
           window.removeEventListener("mousemove", mouseMove);
           window.removeEventListener("mouseup", mouseUp);
